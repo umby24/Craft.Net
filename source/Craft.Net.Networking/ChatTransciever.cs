@@ -47,6 +47,12 @@ namespace Craft.Net.Networking
         SHOW_ITEM,
     }
 
+    public enum ChatPosition 
+    {
+        CHAT = 0,
+        SYSTEM,
+        ACTION,
+    }
     public class ChatMessage
     {
         public string RawMessage { get; private set; }
@@ -54,7 +60,8 @@ namespace Craft.Net.Networking
         public string Text { get; protected set; }
 
         public ChatColor Color { get; protected set; }
-        
+
+        public ChatPosition Position { get; set; }
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Craft.Net.Networking.ChatMessage"/> is bolded.
         /// Can be overriden by submessages with a different value.

@@ -95,6 +95,19 @@ namespace Craft.Net.Common
             }
         }
 
+        public Position ReadPosition() {
+            ulong coded = ReadUInt64();
+            return new Position().FromLong(coded);
+        }
+
+        public void WritePosition(Position value) {
+            WriteUInt64(value.ToLong());
+        }
+
+        public void WritePosition(int x, short y, int z) {
+            WriteUInt64((ulong)(((x & 0x3FFFFFFF) << 38) | ((y & 0xFFF) << 26) | (z & 0x3FFFFFFF)));
+        }
+
         public static int GetVarIntLength(int _value)
         {
             uint value = (uint)_value;

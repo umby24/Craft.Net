@@ -78,9 +78,9 @@ namespace Craft.Net.Networking
             serverbound.Add(typeof(KeepAlivePacket)); // Serverbound
             serverbound.Add(typeof(ChatMessagePacket));
             serverbound.Add(typeof(UseEntityPacket));
-            serverbound.Add(typeof(PlayerPacket));
-            serverbound.Add(typeof(PlayerPositionPacket));
-            serverbound.Add(typeof(PlayerLookPacket));
+            //serverbound.Add(typeof(PlayerPacket));
+            //serverbound.Add(typeof(PlayerPositionPacket));
+            //serverbound.Add(typeof(PlayerLookPacket));
             serverbound.Add(typeof(PlayerPositionAndLookPacket));
             serverbound.Add(typeof(PlayerBlockActionPacket));
             serverbound.Add(typeof(RightClickPacket));
