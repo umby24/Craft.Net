@@ -755,11 +755,11 @@ namespace Craft.Net.Networking
 
     public struct SpawnPlayerPacket : IPacket
     {
-        public SpawnPlayerPacket(int entityId, string uuid, string playerName, int x,
+        public SpawnPlayerPacket(int entityId, Guid uuid, string playerName, int x,
             int y, int z, byte yaw, byte pitch, short heldItem, MetadataDictionary metadata)
         {
             EntityId = entityId;
-            UUID = uuid;
+            PlayerUuid = uuid;
             PlayerName = playerName;
             X = x;
             Y = y;
@@ -772,7 +772,7 @@ namespace Craft.Net.Networking
 
         public int EntityId;
         public string PlayerName;
-        public UUID PlayerUuid;
+        public Guid PlayerUuid;
         public int X, Y, Z;
         public byte Yaw, Pitch;
         public short HeldItem;
@@ -781,7 +781,7 @@ namespace Craft.Net.Networking
         public NetworkMode ReadPacket(MinecraftStream stream, NetworkMode mode, PacketDirection direction)
         {
             EntityId = stream.ReadVarInt();
-            PlayerUuid = stream.ReadUInt8Array(16); 
+            PlayerUuid = new Guid(stream.ReadUInt8Array(16)); 
             PlayerName = stream.ReadString();
             X = stream.ReadInt32();
             Y = stream.ReadInt32();
@@ -796,7 +796,7 @@ namespace Craft.Net.Networking
         public NetworkMode WritePacket(MinecraftStream stream, NetworkMode mode, PacketDirection direction)
         {
             stream.WriteVarInt(EntityId);
-            stream.WriteString(UUID);
+            stream.WriteUInt8Array(PlayerUuid.ToByteArray());
             stream.WriteString(PlayerName);
             stream.WriteInt32(X);
             stream.WriteInt32(Y);
@@ -820,17 +820,16 @@ namespace Craft.Net.Networking
         public int ItemId;
         public int PlayerId;
 
-        public NetworkMode ReadPacket(MinecraftStream stream, NetworkMode mode, PacketDirection direction)
-        {
-            ItemId = stream.ReadInt32();
-            PlayerId = stream.ReadInt32();
+        public NetworkMode ReadPacket(MinecraftStream stream, NetworkMode mode, PacketDirection direction) {
+            ItemId = stream.ReadVarInt();
+            PlayerId = stream.ReadVarInt();
             return mode;
         }
 
         public NetworkMode WritePacket(MinecraftStream stream, NetworkMode mode, PacketDirection direction)
         {
-            stream.WriteInt32(ItemId);
-            stream.WriteInt32(PlayerId);
+            stream.WriteVarInt(ItemId);
+            stream.WriteVarInt(PlayerId);
             return mode;
         }
     }
