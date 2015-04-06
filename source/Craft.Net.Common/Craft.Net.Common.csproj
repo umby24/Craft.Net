@@ -70,7 +70,6 @@
     <Compile Include="Ray.cs" />
     <Compile Include="Size.cs" />
     <Compile Include="SoundEffect.cs" />
-    <Compile Include="UUID.cs" />
     <Compile Include="Vector3.cs" />
     <Compile Include="RuntimeInfo.cs" />
     <Compile Include="BlockFace.cs" />

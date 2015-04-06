@@ -55,6 +55,15 @@ namespace Craft.Net.Common
             return (int)result;
         }
 
+        public int[] ReadVarIntArray(int count) {
+            var arr = new int[count];
+
+            for (int i = 0; i < count; i++) 
+                arr[i] = ReadVarInt();
+
+            return arr;
+        }
+
         /// <summary>
         /// Writes a variable-length integer to the stream.
         /// </summary>
@@ -93,6 +102,11 @@ namespace Craft.Net.Common
                 WriteUInt8((byte)(value & 0x7F | 0x80));
                 value >>= 7;
             }
+        }
+
+        public void WriteVarIntArray(int[] values) {
+            foreach (var value in values)
+                WriteVarInt(value);
         }
 
         public Position ReadPosition() {
